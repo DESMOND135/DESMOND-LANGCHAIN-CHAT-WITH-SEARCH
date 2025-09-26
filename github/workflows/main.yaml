@@ -1,9 +1,10 @@
 name: Sync to Hugging Face hub
+
 on:
   push:
     branches: [main]
 
-  # to run this workflow manually from the Actions tab
+  # Run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
@@ -14,7 +15,10 @@ jobs:
         with:
           fetch-depth: 0
           lfs: true
-      - name: Push to hub
+
+      - name: Push to Hugging Face Hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: git push https://DESMOND135:$HF_TOKEN@huggingface.co/spaces/DESMOND135 /DESMOND135/DESMOND_LANGCHAIN_CHAT_WITH_SEARCH main
+        run: |
+          git remote add space https://user:$HF_TOKEN@huggingface.co/spaces/DESMOND135/DESMOND_LANGCHAIN_CHAT_WITH_SEARCH
+          git push space main --force
